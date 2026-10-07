@@ -1,0 +1,22 @@
+# Hasil kompilasi Quartus (dibuat ulang otomatis)
+QUARTUS/db/
+QUARTUS/incremental_db/
+QUARTUS/simulation/
+QUARTUS/output_files/
+QUARTUS/*.qws
+QUARTUS/c5_pin_model_dump.txt
+*.rpt
+*.summary
+*.smsg
+
+# Library dan keluaran ModelSim / Icarus
+SIM/work/
+*.wlf
+*.vcd
+transcript
+*.vvp
+
+# Sistem operasi
+Thumbs.db
+desktop.ini
+.DS_Store

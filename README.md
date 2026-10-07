@@ -33,10 +33,14 @@ JATI adalah rancangan chip keamanan (*secure element*) untuk e-Paspor yang **tid
 ## Struktur repositori
 
 ```
-RTL/      Kode Verilog-2001 seluruh modul (top-level: jati_top.v)
-SIM/      Testbench self-checking (tb_*.v), skrip ModelSim (*_run.do.txt), model simulasi
-IP/       PLL Intel (pll_sys) dari Quartus IP Catalog
-QUARTUS/  Proyek Quartus (zeroize.qpf/.qsf, top-level jati_top), diagram RTL dan FSM
+RTL/            Kode Verilog-2001 seluruh modul (top-level: jati_top.v)
+SIM/            12 testbench self-checking (tb_*.v), 12 skrip ModelSim (*_run.do),
+                dan model simulasi (pll_sys_sim, ro_puf_array_sim, trng_ro_sim, wd_ro_sim)
+IP/             PLL Intel (pll_sys) dari Quartus IP Catalog
+QUARTUS/        Proyek Quartus (zeroize.qpf/.qsf, top-level jati_top)
+docs/           Diagram RTL dan FSM
+jati.sdc        Batasan timing (TimeQuest)
+jati_pins.tcl   Penempatan pin DE10-Nano (sudah tercatat juga di zeroize.qsf)
 ```
 
 ## Modul RTL
@@ -56,15 +60,15 @@ Satu-satunya IP pihak ketiga adalah PLL Intel. Seluruh modul lain, termasuk inti
 
 ```
 cd SIM
-vsim -do jati_top_run.do.txt      # uji sistem lewat pin UART
-vsim -do key_manager_run.do.txt   # contoh uji unit
+vsim -do jati_top_run.do      # uji sistem lewat pin UART
+vsim -do key_manager_run.do   # contoh uji unit
 ```
 
-Setiap testbench mencetak LULUS/GAGAL secara otomatis.
+Tersedia satu skrip `*_run.do` untuk setiap testbench. Setiap testbench mencetak LULUS/GAGAL secara otomatis. Folder `SIM/work/` dan file `.vcd`/`.wlf` hasil simulasi tidak disimpan di repo (lihat `.gitignore`).
 
 ## Sintesis (Quartus)
 
-Buka `QUARTUS/zeroize.qpf` di Quartus Prime Lite 23.1 lalu jalankan *Compile Design*. Top-level entity adalah `jati_top`, untuk perangkat 5CSEBA6U23I7.
+Buka `QUARTUS/zeroize.qpf` di Quartus Prime Lite 23.1 lalu jalankan *Compile Design*. Top-level entity adalah `jati_top`, untuk perangkat 5CSEBA6U23I7. Semua path di proyek bersifat relatif terhadap folder repo, dan `jati.sdc` serta penempatan pin sudah terhubung ke proyek. Folder hasil kompilasi (`db/`, `incremental_db/`, `output_files/`) dibuat ulang otomatis dan tidak disimpan di repo.
 
 ## Pin DE10-Nano
 
